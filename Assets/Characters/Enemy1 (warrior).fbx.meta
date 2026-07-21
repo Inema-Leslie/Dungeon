@@ -3,9 +3,29 @@ guid: a15d2f5fd661f834e9481ee8e9dde891
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Guard_02
+    second: {fileID: 2100000, guid: 224418f2d2cca5f4d854be3c673e4790, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Guard_02__diffuse
+    second: {fileID: 2800000, guid: 5a84725424cf5c7429ff576187de781c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Guard_02__normal
+    second: {fileID: 2800000, guid: 2c600c4178eb3cb468bbdd8601f3a2ed, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Guard_02__specular
+    second: {fileID: 2800000, guid: 6a927f2b3ef13cb4d887beac8dea9930, type: 3}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
