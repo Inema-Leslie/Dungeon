@@ -29,5 +29,6 @@ public static class GameEvents
     public static void RaiseLevelCompleted(int levelIndex) => OnLevelCompleted?.Invoke(levelIndex);
     public static void RaiseLevelUnlocked(int levelIndex) => OnLevelUnlocked?.Invoke(levelIndex);
     public static void RaiseGameStateChanged (string state) => OnGameStateChanged?.Invoke(state);
+    public static void RaiseItemCollected(string itemId) => OnItemCollected?.Invoke(itemId);
 }
 

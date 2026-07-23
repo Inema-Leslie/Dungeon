@@ -9,14 +9,30 @@ public class DoorController : MonoBehaviour
     private InputSystem_Actions inputActions;
     private int hitCount = 0;
     private bool playerInRange = false;
+    private bool weaponCollected = false;
 
     private void Awake()
     {
         inputActions = new InputSystem_Actions();
     }
 
-    private void OnEnable() => inputActions.Player.Enable();
-    private void OnDisable() => inputActions.Player.Disable();
+    private void OnEnable()
+    {
+        inputActions.Player.Enable();
+        GameEvents.OnItemCollected += HandleItemCollected;
+    }
+
+    private void OnDisable()
+    {
+        inputActions.Player.Disable();
+        GameEvents.OnItemCollected -= HandleItemCollected;
+    }
+
+    private void HandleItemCollected(string itemId)
+    {
+        if (itemId == "Weapon")
+            weaponCollected = true;
+    }
 
     private void Update()
     {
@@ -24,8 +40,13 @@ public class DoorController : MonoBehaviour
 
         if (inputActions.Player.Interact.WasPressedThisFrame())
         {
+            if (!weaponCollected)
+            {
+                Debug.Log("Pick up the weapon first.");
+                return;
+            }
+
             hitCount++;
-            Debug.Log("Hit count:" + hitCount);
 
             if (hitCount >= hitsRequired)
             {
@@ -38,7 +59,6 @@ public class DoorController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
             playerInRange = true;
-            Debug.Log("Player entered door range");
     }
 
     private void OnTriggerExit(Collider other)
