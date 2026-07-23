@@ -445,8 +445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93880a05be826bb40b23ad45eccb273e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerChainState
-  playerMovement: {fileID: 0}
-  animator: {fileID: 0}
+  playerMovement: {fileID: 65794493}
+  animator: {fileID: 65794494}
   chainProp: {fileID: 231088153}
   attemptsRequired: 3
 --- !u!114 &65794493
@@ -476,7 +476,7 @@ Animator:
   m_GameObject: {fileID: 65794491}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d5a95221a30b81f49b3ed54228f60e35, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
