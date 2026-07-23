@@ -24,7 +24,8 @@ public class PlayerChainState : MonoBehaviour
     void Update()
     {
      if (!isChained) return;
-     bool inputPressed = Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.1f || Mathf.Abs(Input.GetAxisRaw ("Vertical")) > 0.1f;
+     Vector2 moveInput = playerMovement != null ? playerMovement.GetCurrentMoveInput() : Vector2.zero;
+     bool inputPressed = moveInput.magnitude > 0.1f;
      // count a press as an attempt to free
      if (inputPressed && !inputHeldLastFrame)
         {

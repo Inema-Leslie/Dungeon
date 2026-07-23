@@ -465,7 +465,7 @@ MonoBehaviour:
   rotationSpeed: 10
   gravity: -15
   cameraTransform: {fileID: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 65794494}
 --- !u!95 &65794494
 Animator:
   serializedVersion: 7
@@ -475,7 +475,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65794491}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 7f85341b7537e5f4da8372c8edfd7fd4, type: 3}
   m_Controller: {fileID: 9100000, guid: d5a95221a30b81f49b3ed54228f60e35, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -1315,8 +1315,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 428311738}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2609549, y: -0.2705908, z: 0.076461986, w: 0.92349166}
-  m_LocalPosition: {x: 17.551538, y: 5.7861824, z: -1.7788553}
+  m_LocalRotation: {x: 0.34385872, y: -0.30552304, z: 0.11940115, w: 0.8798638}
+  m_LocalPosition: {x: 14.379462, y: 2.8278546, z: 3.7153435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1371,7 +1371,7 @@ MonoBehaviour:
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
   OrbitStyle: 0
-  Radius: 10
+  Radius: 3
   Orbits:
     Top:
       Radius: 2
@@ -3475,13 +3475,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578703223}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.05982209, y: -0.9534736, z: 0.06071357, w: 0.2891768}
-  m_LocalPosition: {x: 14.06, y: 4.77, z: 10.95}
+  m_LocalRotation: {x: 0.016692424, y: -0.9230003, z: 0.040299077, w: 0.3823192}
+  m_LocalPosition: {x: 15.5, y: 1.6, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 8.649, y: -146.603, z: -4.581}
+  m_LocalEulerAnglesHint: {x: 5, y: -135, z: 0}
 --- !u!1001 &1588999998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4185,8 +4185,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1855409625}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2609549, y: -0.2705908, z: 0.076461986, w: 0.9234916}
-  m_LocalPosition: {x: 17.551538, y: 5.7861824, z: -1.7788553}
+  m_LocalRotation: {x: 0.34385872, y: -0.30552304, z: 0.11940117, w: 0.87986374}
+  m_LocalPosition: {x: 14.379462, y: 2.8278546, z: 3.7153435}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4260,7 +4260,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 0.5
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
