@@ -31,6 +31,7 @@ public class WeaponPickup : MonoBehaviour, ICollectable
 
     private void OnTriggerEnter(Collider other)
     {
+         Debug.Log("Something entered weapon trigger: " + other.name);
         if (other.CompareTag("Player"))
             playerInRange = true;
             Debug.Log("Player entered weapon pickup range");
