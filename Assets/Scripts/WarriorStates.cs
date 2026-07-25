@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 
@@ -8,7 +9,6 @@ public interface IWarriorState
     void Exit();
 }
 
-/// <summary>Standing still, not yet aware of the player.</summary>
 public class WarriorIdleState : IWarriorState
 {
     private readonly WarriorBehaviour warrior;
@@ -61,7 +61,6 @@ public class WarriorChaseState : IWarriorState
 
         if (distance > warrior.DetectionRange * 1.5f)
         {
-            // Player escaped far enough -- give up the chase.
             warrior.ChangeState(warrior.IdleState);
             return;
         }
@@ -88,7 +87,7 @@ public class WarriorChaseState : IWarriorState
     public void Exit() { }
 }
 
-/// <summary>In range, attacking on cooldown.</summary>
+
 public class WarriorAttackState : IWarriorState
 {
     private readonly WarriorBehaviour warrior;
@@ -120,7 +119,10 @@ public class WarriorAttackState : IWarriorState
 
             IDamageable playerHealth = warrior.Player.GetComponent<IDamageable>();
             if (playerHealth != null)
+            {
                 warrior.Attack(playerHealth);
+                warrior.RegisterHitOnPlayer();
+            }
         }
     }
 
@@ -142,11 +144,10 @@ public class WarriorDeadState : IWarriorState
         warrior.SetDeadAnim();
         warrior.SetAnimSpeed(0f);
 
-     
         Collider col = warrior.GetComponent<Collider>();
         if (col != null) col.enabled = false;
     }
 
-    public void Update() { } // permanent state, nothing to do
+    public void Update() { }
     public void Exit() { }
 }

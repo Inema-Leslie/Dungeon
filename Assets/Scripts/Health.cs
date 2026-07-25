@@ -22,22 +22,24 @@ public class Health : MonoBehaviour, IDamageable
     }
 
     public void TakeDamage(float amount)
+{
+    if (isDead) return;
+
+    currentHealth -= amount;
+    currentHealth = Mathf.Max(currentHealth, 0f);
+
+    Debug.Log($"[Health:{gameObject.name}] Took {amount} damage. Current: {currentHealth}/{maxHealth}");
+
+    OnDamaged?.Invoke();
+
+    if (isPlayer)
+        GameEvents.RaiseHealthChanged(currentHealth, maxHealth);
+
+    if (currentHealth <= 0f)
     {
-        if (isDead) return;
-
-        currentHealth -= amount;
-        currentHealth = Mathf.Max(currentHealth, 0f);
-
-        OnDamaged?.Invoke();
-
-        if (isPlayer)
-            GameEvents.RaiseHealthChanged(currentHealth, maxHealth);
-
-        if (currentHealth <= 0f)
-        {
-            Die();
-        }
+        Die();
     }
+}
 
     public void Die()
     {

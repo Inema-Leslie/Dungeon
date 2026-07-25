@@ -52,6 +52,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable
             IDamageable damageable = hit.GetComponent<IDamageable>();
             if (damageable != null)
             {
+                 Debug.Log($"[Player] Hit {hit.gameObject.name} for {attackDamage} damage.");
                 Attack(damageable);
             }
         }

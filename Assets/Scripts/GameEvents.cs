@@ -15,6 +15,8 @@ public static class GameEvents
     public static event Action<string> OnEnemyDefeated;
     public static event Action<int> OnLevelCompleted;
     public static event Action<int> OnLevelUnlocked;
+    public static event System.Action OnChildSaved;
+    public static event System.Action OnChildDied;
 
     // --- Game state ---
     public static event Action <string> OnGameStateChanged; //paused or gameover
@@ -30,5 +32,7 @@ public static class GameEvents
     public static void RaiseLevelUnlocked(int levelIndex) => OnLevelUnlocked?.Invoke(levelIndex);
     public static void RaiseGameStateChanged (string state) => OnGameStateChanged?.Invoke(state);
     public static void RaiseItemCollected(string itemId) => OnItemCollected?.Invoke(itemId);
+    public static void RaiseChildSaved() => OnChildSaved?.Invoke();
+    public static void RaiseChildDied() => OnChildDied?.Invoke();
 }
 

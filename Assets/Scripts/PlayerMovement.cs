@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour, IMovable
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float gravity = -15f;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private float jumpHeight = 1.5f;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -60,6 +61,10 @@ public class PlayerMovement : MonoBehaviour, IMovable
 
         MoveAndRotate(input);
         ApplyGravity();
+        if (inputActions.Player.Jump.WasPressedThisFrame()&& controller .isGrounded)
+        {
+            verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
 
         if (animator != null)
         {
