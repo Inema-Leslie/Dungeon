@@ -15,23 +15,33 @@ public class Arrow : MonoBehaviour
 
     private void Update()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        Vector3 previousPosition = transform.position;
+        Vector3 movement = transform.forward * speed * Time.deltaTime;
+        Vector3 nextPosition = previousPosition + movement;
+
+
+        Vector3 rayStart = previousPosition + transform.forward * 0.1f;
+
+        if (Physics.Raycast(rayStart, movement.normalized, out RaycastHit hit, movement.magnitude))
+        {
+            Debug.Log($"[Arrow] Hit: {hit.collider.gameObject.name}, has IDamageable: {hit.collider.TryGetComponent<IDamageable>(out _)}");
+
+            if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
+            {
+                damageable.TakeDamage(damage);
+            }
+
+            ReturnToPool();
+            return;
+        }
+
+        transform.position = nextPosition;
 
         timer += Time.deltaTime;
         if (timer >= lifetime)
         {
             ReturnToPool();
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<IDamageable>(out var damageable))
-        {
-            damageable.TakeDamage(damage);
-        }
-
-        ReturnToPool();
     }
 
     private void ReturnToPool()

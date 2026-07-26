@@ -46,19 +46,23 @@ public class ArcherBehaviour : MonoBehaviour, IEnemyBehaviour
     public bool CanShoot() => cooldownTimer <= 0f;
     public void StartShootCooldown() => cooldownTimer = ShootCooldown;
 
-    /// <summary>Called via Animation Event on the Shoot clip, at the exact release frame.</summary>
-    public void FireArrow()
-    {
-        if (Player == null || BowPoint == null) return;
+   
+   public void FireArrow()
+{
+    if (Player == null || BowPoint == null) return;
 
-        Arrow arrow = ArrowPool.Instance.GetArrow();
-        arrow.transform.position = BowPoint.position;
-        arrow.transform.rotation = Quaternion.LookRotation((Player.position - BowPoint.position).normalized);
+    Vector3 targetPoint = Player.position + Vector3.up * 1f;
+    Vector3 aimDir = (targetPoint - BowPoint.position).normalized;
+    Debug.Log($"[Archer:{gameObject.name}] BowPoint pos: {BowPoint.position}, AimDir: {aimDir}");
 
-        Debug.Log($"[Archer:{gameObject.name}] Fired arrow at Player.");
-    }
+    Arrow arrow = ArrowPool.Instance.GetArrow();
+    arrow.transform.position = BowPoint.position;
+    arrow.transform.rotation = Quaternion.LookRotation(aimDir);
 
-    /// <summary>Called once when the Player reaches the Level 4 checkpoint — stops this Archer permanently.</summary>
+    Debug.Log($"[Archer:{gameObject.name}] Fired arrow at Player.");
+}
+
+  
     public void ForceStop()
     {
         if (!enabled) return;

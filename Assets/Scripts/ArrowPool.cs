@@ -12,20 +12,24 @@ public class ArrowPool : MonoBehaviour
 
     private Queue<Arrow> pool = new Queue<Arrow>();
 
-    private void Awake()
+   private void Awake()
+{
+    if (Instance != null && Instance != this)
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
-        for (int i = 0; i < poolSize; i++)
-        {
-            CreateNewArrow();
-        }
+        Destroy(gameObject);
+        return;
     }
+    Instance = this;
+
+    Debug.Log($"[ArrowPool] Awake running. Arrow Prefab assigned: {arrowPrefab != null}, Pool Size: {poolSize}");
+
+    for (int i = 0; i < poolSize; i++)
+    {
+        CreateNewArrow();
+    }
+
+    Debug.Log($"[ArrowPool] Finished creating pool. Pool count: {pool.Count}, Actual child count: {transform.childCount}");
+}
 
     private void CreateNewArrow()
     {
