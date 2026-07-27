@@ -1,10 +1,9 @@
 using UnityEngine;
 
-
 public class WeaponPickup : MonoBehaviour, ICollectable
 {
-    [SerializeField] private GameObject weaponVisual;    
-    [SerializeField] private GameObject playerHandWeapon;  
+    [SerializeField] private GameObject weaponVisual;
+    [SerializeField] private GameObject playerHandWeapon;
 
     public string ItemId => "Weapon";
 
@@ -16,6 +15,17 @@ public class WeaponPickup : MonoBehaviour, ICollectable
         inputActions = new InputSystem_Actions();
     }
 
+    private void Start()
+    {
+       
+        if (PlayerInventory.Instance != null && PlayerInventory.Instance.HasItem(ItemId))
+        {
+            if (weaponVisual != null) weaponVisual.SetActive(false);
+            if (playerHandWeapon != null) playerHandWeapon.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
+
     private void OnEnable() => inputActions.Player.Enable();
     private void OnDisable() => inputActions.Player.Disable();
 
@@ -25,16 +35,14 @@ public class WeaponPickup : MonoBehaviour, ICollectable
 
         if (inputActions.Player.Interact.WasPressedThisFrame())
         {
-            OnCollect(null); 
+            OnCollect(null);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-         Debug.Log("Something entered weapon trigger: " + other.name);
         if (other.CompareTag("Player"))
             playerInRange = true;
-            Debug.Log("Player entered weapon pickup range");
     }
 
     private void OnTriggerExit(Collider other)
@@ -47,12 +55,12 @@ public class WeaponPickup : MonoBehaviour, ICollectable
     {
         Debug.Log("Weapon collected!");
         if (weaponVisual != null)
-            weaponVisual.SetActive(false); 
+            weaponVisual.SetActive(false);
 
         if (playerHandWeapon != null)
-            playerHandWeapon.SetActive(true); 
+            playerHandWeapon.SetActive(true);
 
         GameEvents.RaiseItemCollected(ItemId);
-        gameObject.SetActive(false); 
+        gameObject.SetActive(false);
     }
 }

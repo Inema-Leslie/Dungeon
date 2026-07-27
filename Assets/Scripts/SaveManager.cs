@@ -40,10 +40,34 @@ public class SaveManager : MonoBehaviour
         SaveGame(data);
     }
 
+    public void SaveCurrentLevel(int levelIndex)
+    {
+        SaveData data = LoadGame() ?? new SaveData();
+        data.currentLevel = levelIndex;
+        SaveGame(data);
+    }
+
+    public void SavePlayerState(float health, bool hasShield, System.Collections.Generic.List<string> inventory)
+    {
+        SaveData data = LoadGame() ?? new SaveData();
+        data.playerHealth = health;
+        data.hasShield = hasShield;
+        data.inventory = inventory;
+        SaveGame(data);
+    }
+
     public bool HasSaveFile() => File.Exists(SavePath);
 
     public void DeleteSave()
     {
         if (File.Exists(SavePath)) File.Delete(SavePath);
+    }
+    
+
+    public void SaveInventory(System.Collections.Generic.List<string> inventory)
+    {
+    SaveData data = LoadGame() ?? new SaveData();
+    data.inventory = inventory;
+    SaveGame(data);
     }
 }

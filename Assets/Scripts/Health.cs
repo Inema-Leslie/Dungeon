@@ -61,4 +61,11 @@ public class Health : MonoBehaviour, IDamageable
         if (isPlayer)
             GameEvents.RaiseHealthChanged(currentHealth, maxHealth);
     }
+    
+
+    public void SetHealth(float amount)
+    {
+    currentHealth = Mathf.Clamp(amount, 0f, maxHealth);
+    isDead = currentHealth <= 0f;
+    }
 }

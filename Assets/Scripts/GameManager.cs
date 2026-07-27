@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         if (data != null && data.levelStatus != null && data.levelStatus.Length == totalLevels)
         {
             levelStatus = data.levelStatus;
+            CurrentLevelIndex = data.currentLevel;
         }
         else
         {
@@ -61,7 +62,11 @@ public class GameManager : MonoBehaviour
         SaveProgress();
     }
 
-    public void SetCurrentLevel(int levelIndex) => CurrentLevelIndex = levelIndex;
+    public void SetCurrentLevel(int levelIndex)
+    {
+        CurrentLevelIndex = levelIndex;
+        SaveManager.Instance?.SaveCurrentLevel(levelIndex);
+    }
 
     private void SaveProgress()
     {

@@ -68,10 +68,11 @@ public class DoorController : MonoBehaviour
     }
 
     private void OpenDoor()
-    {
-        if (doorMesh != null)
-            doorMesh.SetActive(false);
+{
+    if (doorMesh != null)
+        doorMesh.SetActive(false);
 
-        GameEvents.RaiseDoorOpened();
-    }
+    GameEvents.RaiseDoorOpened();
+    GameManager.Instance?.CompleteLevel(0); 
+}
 }
