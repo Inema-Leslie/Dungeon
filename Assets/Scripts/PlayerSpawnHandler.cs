@@ -9,35 +9,36 @@ public class PlayerSpawnHandler : MonoBehaviour
     [SerializeField] private ObjectiveMessageManager objectiveMessageManager;
     [SerializeField] private AudioClip backgroundMusic;
 
-    private void Start()
+   private void Start()
+{
+    int levelIndex = GameManager.Instance != null ? GameManager.Instance.CurrentLevelIndex : 0;
+
+    if (levelIndex < 0 || levelIndex >= levelSpawnPoints.Length || levelSpawnPoints[levelIndex] == null)
     {
-        int levelIndex = GameManager.Instance != null ? GameManager.Instance.CurrentLevelIndex : 0;
-
-        if (levelIndex < 0 || levelIndex >= levelSpawnPoints.Length || levelSpawnPoints[levelIndex] == null)
-        {
-            Debug.LogWarning($"[PlayerSpawnHandler] No spawn point set for level index {levelIndex}.");
-            return;
-        }
-
-        TeleportPlayer(levelSpawnPoints[levelIndex].position, levelSpawnPoints[levelIndex].rotation);
-        RestorePlayerState();
-
-        objectiveMessageManager?.ShowObjective(levelIndex);
-
-        AudioManager.Instance?.PlayMusic(backgroundMusic);
+        Debug.LogWarning($"[PlayerSpawnHandler] No spawn point set for level index {levelIndex}.");
     }
+    else
+    {
+        TeleportPlayer(levelSpawnPoints[levelIndex].position, levelSpawnPoints[levelIndex].rotation);
+    }
+
+    RestorePlayerState();
+    objectiveMessageManager?.ShowObjective(levelIndex);
+    AudioManager.Instance?.PlayMusic(backgroundMusic);
+}
 
     private void TeleportPlayer(Vector3 position, Quaternion rotation)
-    {
-        if (playerController != null) playerController.enabled = false;
+{
+    if (playerController != null) playerController.enabled = false;
 
-        player.position = position;
-        player.rotation = rotation;
+    player.position = position;
+    player.rotation = rotation;
 
-        if (playerController != null) playerController.enabled = true;
+    if (playerController != null) playerController.enabled = true;
 
-        Debug.Log($"[PlayerSpawnHandler] Player spawned at level index {GameManager.Instance.CurrentLevelIndex}.");
-    }
+    int currentLevel = GameManager.Instance != null ? GameManager.Instance.CurrentLevelIndex : 0;
+    Debug.Log($"[PlayerSpawnHandler] Player spawned at level index {currentLevel}.");
+}
 
     private void RestorePlayerState()
     {

@@ -30,30 +30,34 @@ public class ObjectiveMessageManager : MonoBehaviour
     }
 
     public void ShowObjective(int levelIndex)
-    {
-        if (levelIndex < 0 || levelIndex >= objectives.Length)
-        {
-            Debug.LogWarning($"[ObjectiveMessageManager] No objective text for level index {levelIndex}.");
-            return;
-        }
+{
+    Debug.Log($"[ObjectiveMessageManager] ShowObjective called with levelIndex: {levelIndex}"); 
 
-        objectiveText.text = objectives[levelIndex];
-        StopAllCoroutines();
-        StartCoroutine(ShowThenFade());
+    if (levelIndex < 0 || levelIndex >= objectives.Length)
+    {
+        Debug.LogWarning($"[ObjectiveMessageManager] No objective text for level index {levelIndex}.");
+        return;
     }
+
+    objectiveText.text = objectives[levelIndex];
+    StopAllCoroutines();
+    StartCoroutine(ShowThenFade());
+}
 
     private IEnumerator ShowThenFade()
-    {
-        canvasGroup.alpha = 1f;
-        yield return new WaitForSeconds(displayDuration);
+{
+    Debug.Log($"[ObjectiveMessageManager] Coroutine started, setting alpha to 1."); 
+    canvasGroup.alpha = 1f;
+    yield return new WaitForSeconds(displayDuration);
 
-        float timer = 0f;
-        while (timer < fadeDuration)
-        {
-            timer += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
-            yield return null;
-        }
-        canvasGroup.alpha = 0f;
+    float timer = 0f;
+    while (timer < fadeDuration)
+    {
+        timer += Time.deltaTime;
+        canvasGroup.alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
+        yield return null;
     }
+    canvasGroup.alpha = 0f;
+    Debug.Log("[ObjectiveMessageManager] Fade complete, alpha back to 0."); // NEW
+}
 }
