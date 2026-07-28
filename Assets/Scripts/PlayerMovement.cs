@@ -8,8 +8,8 @@ public class PlayerMovement : MonoBehaviour, IMovable
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float gravity = -15f;
-    [SerializeField] private Transform cameraTransform;
     [SerializeField] private float jumpHeight = 1.5f;
+    [SerializeField] private Transform cameraTransform;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -24,6 +24,11 @@ public class PlayerMovement : MonoBehaviour, IMovable
     private Vector3 currentVelocity;
     private float verticalVelocity;
     private bool movementEnabled = true;
+
+    // --- Dash state (driven externally by DashAbility.Activate) ---
+    private bool isDashing = false;
+    private float dashTimer = 0f;
+    private float dashSpeed = 0f;
 
     private InputSystem_Actions inputActions;
 
@@ -50,6 +55,23 @@ public class PlayerMovement : MonoBehaviour, IMovable
             return;
         }
 
+        // Dashing overrides normal movement entirely for its short duration.
+        if (isDashing)
+        {
+            dashTimer -= Time.deltaTime;
+
+            Vector3 dashMotion = transform.forward * dashSpeed * Time.deltaTime;
+            controller.Move(dashMotion);
+
+            if (dashTimer <= 0f)
+            {
+                isDashing = false;
+            }
+
+            if (animator != null) animator.SetFloat(SpeedParam, dashSpeed);
+            return;
+        }
+
         Vector2 input = inputActions.Player.Move.ReadValue<Vector2>();
 
         if (inputActions.Player.Crouch.IsPressed())
@@ -59,12 +81,13 @@ public class PlayerMovement : MonoBehaviour, IMovable
         else
             currentStrategy = walkStrategy;
 
-        MoveAndRotate(input);
-        ApplyGravity();
-        if (inputActions.Player.Jump.WasPressedThisFrame()&& controller .isGrounded)
+        if (inputActions.Player.Jump.WasPressedThisFrame() && controller.isGrounded)
         {
             verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
+
+        MoveAndRotate(input);
+        ApplyGravity();
 
         if (animator != null)
         {
@@ -111,4 +134,14 @@ public class PlayerMovement : MonoBehaviour, IMovable
 
     /// <summary>Exposes current move input so PlayerChainState can count attempts.</summary>
     public Vector2 GetCurrentMoveInput() => inputActions.Player.Move.ReadValue<Vector2>();
+
+    /// <summary>Called by DashAbility.Activate() to trigger a short burst of forward movement.</summary>
+    public void StartDash(float distance, float duration)
+    {
+        if (isDashing) return;
+
+        isDashing = true;
+        dashTimer = duration;
+        dashSpeed = distance / duration;
+    }
 }

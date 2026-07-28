@@ -31,3 +31,10 @@ public interface IEnemyBehaviour
     void UpdateBehaviour(Transform self, Transform target);
     void OnPlayerDetected(Transform player);
 }
+public interface IAbility
+{
+    string AbilityName { get; }
+    float Cooldown { get; }
+    bool CanActivate();
+    void Activate(UnityEngine.GameObject user);
+}
