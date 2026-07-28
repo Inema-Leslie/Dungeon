@@ -1,4 +1,3 @@
-// WarriorBehaviour.cs
 using UnityEngine;
 
 
@@ -7,10 +6,11 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
 {
     [Header("Detection & Combat")]
     [SerializeField] private float detectionRange = 8f;
-    [SerializeField] private float attackRange = 1.2f;      // tuned down from 2f — has to close more distance
+    [SerializeField] private float attackRange = 1.2f;
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float attackDamage = 15f;
-    [SerializeField] private float attackCooldown = 2.5f;   // tuned up from 1.5f — fewer swings over time
+    [SerializeField] private float attackCooldown = 2.5f;
+    [SerializeField] private AudioClip hitSound; 
 
     [Header("Fight Outcome (hit-count based)")]
     [SerializeField] private int hitsToDefeatPlayer = 5;
@@ -18,7 +18,7 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
 
     [Header("References")]
     [SerializeField] private Animator animator;
-    [SerializeField] private Transform player; // assign, or auto-found by tag
+    [SerializeField] private Transform player;
 
     private static readonly int SpeedParam = Animator.StringToHash("Speed");
     private static readonly int AttackTrigger = Animator.StringToHash("Attack");
@@ -32,7 +32,6 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
     private int warriorHitsOnPlayer = 0;
     private int playerHitsOnWarrior = 0;
 
-    // States (created once, reused)
     public WarriorIdleState IdleState { get; private set; }
     public WarriorChaseState ChaseState { get; private set; }
     public WarriorAttackState AttackState { get; private set; }
@@ -45,6 +44,7 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
     public Animator Animator => animator;
     public Transform Player => player;
     public Health Health => health;
+    public AudioClip HitSound => hitSound; 
 
     private void Awake()
     {
@@ -106,10 +106,9 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
     public void TriggerHitAnim() => animator?.SetTrigger(HitTrigger);
     public void SetDeadAnim() => animator?.SetBool(IsDeadParam, true);
 
-    /// <summary>Call this whenever the Warrior successfully lands a hit on the Player.</summary>
     public void RegisterHitOnPlayer()
     {
-        if (health.IsDead) return; // fight's already over, stop counting
+        if (health.IsDead) return;
 
         warriorHitsOnPlayer++;
         Debug.Log($"[Warrior] Hit Player! ({warriorHitsOnPlayer}/{hitsToDefeatPlayer})");
@@ -135,19 +134,22 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
         {
             Debug.Log("[Warrior] Reached hit threshold — Warrior defeated.");
             health.Die();
-            ChangeState(DeadState); // switch immediately, don't wait for next Update()
+            ChangeState(DeadState);
         }
     }
 
-    /// <summary>Permanently halts the Warrior — used when the Player leaves its area (e.g. enters the Monster's room).</summary>
+    
+
     public void ForceStop()
     {
-        if (!enabled) return; // already stopped
+    if (!enabled) return;
 
-        Debug.Log("[Warrior] ForceStop triggered — Player left Warrior's territory.");
-        ChangeState(IdleState);
-        SetAnimSpeed(0f);
-        enabled = false; // stops Update() entirely — Warrior freezes in place, no more chase/attack logic runs
+    Debug.Log("[Warrior] ForceStop triggered — Player left Warrior's territory.");
+    ChangeState(IdleState);
+    SetAnimSpeed(0f);
+    enabled = false;
+
+    if (TryGetComponent<Collider>(out var col)) col.enabled = false; // NEW — stop physically blocking the path
     }
 
     // --- IEnemyBehaviour ---

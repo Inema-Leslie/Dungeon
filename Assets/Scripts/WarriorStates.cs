@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 
@@ -87,7 +86,7 @@ public class WarriorChaseState : IWarriorState
     public void Exit() { }
 }
 
-
+/// <summary>In range, attacking on cooldown.</summary>
 public class WarriorAttackState : IWarriorState
 {
     private readonly WarriorBehaviour warrior;
@@ -122,6 +121,7 @@ public class WarriorAttackState : IWarriorState
             {
                 warrior.Attack(playerHealth);
                 warrior.RegisterHitOnPlayer();
+                AudioManager.Instance?.PlayCombatSound(warrior.HitSound); // NEW
             }
         }
     }

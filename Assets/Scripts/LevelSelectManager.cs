@@ -16,8 +16,12 @@ public class LevelSelectManager : MonoBehaviour
     [SerializeField] private Sprite closedLockSprite;
     [SerializeField] private string gameSceneName = "SampleScene";
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip introSound;
+
     private void Start()
     {
+         AudioManager.Instance?.PlayMusic(introSound); 
         for (int i = 0; i < levelButtons.Length; i++)
         {
             int levelIndex = i; 

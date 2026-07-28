@@ -7,6 +7,28 @@ public interface IGuardianState
     void Exit(GuardianBehaviour guardian);
 }
 
+public class GuardianIdleState : IGuardianState
+{
+    public void Enter(GuardianBehaviour guardian)
+    {
+        guardian.Animator?.SetFloat("Speed", 0f);
+    }
+
+    public void Tick(GuardianBehaviour guardian)
+    {
+        if (guardian.Player == null) return;
+
+        float distance = Vector3.Distance(guardian.transform.position, guardian.Player.position);
+
+        if (distance <= guardian.EngageRange)
+        {
+            guardian.ChangeState(new GuardianBlockState());
+        }
+    }
+
+    public void Exit(GuardianBehaviour guardian) { }
+}
+
 public class GuardianBlockState : IGuardianState
 {
     public void Enter(GuardianBehaviour guardian)

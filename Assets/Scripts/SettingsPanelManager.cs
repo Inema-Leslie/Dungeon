@@ -30,7 +30,7 @@ public class SettingsPanelManager : MonoBehaviour
         SaveData data = SaveManager.Instance?.LoadGame() ?? new SaveData();
         data.musicVolume = value;
         SaveManager.Instance?.SaveGame(data);
-        AudioListener.volume = value; // simple global hookup; refine once real audio mixing exists
+        AudioManager.Instance?.SetMusicVolume(value);
     }
 
     private void OnSfxChanged(float value)
@@ -38,6 +38,7 @@ public class SettingsPanelManager : MonoBehaviour
         SaveData data = SaveManager.Instance?.LoadGame() ?? new SaveData();
         data.sfxVolume = value;
         SaveManager.Instance?.SaveGame(data);
+        AudioManager.Instance?.SetSFXVolume(value);
     }
 
     private void Close()

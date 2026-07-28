@@ -9,6 +9,7 @@ public class PlayerCombat : MonoBehaviour, IAttackable
     [SerializeField] private float attackCooldown = 0.8f;
     [SerializeField] private Transform attackOrigin; 
     [SerializeField] private Animator animator;
+    [SerializeField] private AudioClip hitSound; 
 
     private static readonly int AttackTrigger = Animator.StringToHash("Attack");
 
@@ -52,8 +53,8 @@ public class PlayerCombat : MonoBehaviour, IAttackable
             IDamageable damageable = hit.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                 Debug.Log($"[Player] Hit {hit.gameObject.name} for {attackDamage} damage.");
                 Attack(damageable);
+                AudioManager.Instance?.PlayCombatSound(hitSound); // NEW
             }
         }
     }

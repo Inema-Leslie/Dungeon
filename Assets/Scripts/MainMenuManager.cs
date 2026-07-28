@@ -14,11 +14,15 @@ public class MainMenuManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject settingsPanel;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip introSound;
+
     private const string GameSceneName = "SampleScene";
     private const string LevelSelectSceneName = "LevelSelect";
 
     private void Start()
     {
+        AudioManager.Instance?.PlayMusic(introSound); 
         bool hasSave = SaveManager.Instance != null && SaveManager.Instance.HasSaveFile();
         continueGameButton.interactable = hasSave;
 

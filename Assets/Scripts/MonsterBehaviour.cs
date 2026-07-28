@@ -6,8 +6,8 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
     [Header("References")]
     public Transform Player;
     public Animator Animator;
-    public Transform AttackPoint;      
-    public GameObject Child;          
+    public Transform AttackPoint;
+    public GameObject Child;
 
     [Header("Combat Settings")]
     public float EngageRange = 4f;
@@ -16,6 +16,7 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
     public float AttackDamage = 15f;
     public float AttackRadius = 1f;
     public LayerMask PlayerLayer;
+    [SerializeField] private AudioClip hitSound; // NEW
 
     private IMonsterState currentState;
     private Health health;
@@ -59,7 +60,6 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
         currentState.Enter(this);
     }
 
-    // Same OverlapSphere approach as PlayerCombat.cs
     public void PerformAttack()
     {
         Animator?.SetTrigger("Attack");
@@ -70,6 +70,7 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
             if (hit.TryGetComponent<IDamageable>(out var damageable))
             {
                 damageable.TakeDamage(AttackDamage);
+                AudioManager.Instance?.PlayCombatSound(hitSound); // NEW
             }
         }
     }
@@ -78,7 +79,6 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
     {
         if (deathHandled) return;
 
-       
         if (health.CurrentHealth <= 0f)
         {
             deathHandled = true;
@@ -89,7 +89,7 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
 
     private void HandleDeath()
     {
-        ChangeState(new MonsterDeadState()); // triggers Die animation + disables collision/AI
+        ChangeState(new MonsterDeadState());
         GameEvents.RaiseChildSaved();
     }
 
@@ -99,7 +99,6 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
         if (TryGetComponent<Collider>(out var col)) col.enabled = false;
     }
 
-    // --- IEnemyBehaviour ---
     public void UpdateBehaviour(Transform self, Transform target)
     {
         if (target != null) Player = target;

@@ -5,11 +5,12 @@ public class ArcherBehaviour : MonoBehaviour, IEnemyBehaviour
     [Header("References")]
     public Transform Player;
     public Animator Animator;
-    public Transform BowPoint; // where arrows spawn from
+    public Transform BowPoint;
 
     [Header("Combat Settings")]
     public float DetectionRange = 10f;
     public float ShootCooldown = 2f;
+    [SerializeField] private AudioClip shootSound; // NEW
 
     private IArcherState currentState;
     private float cooldownTimer = 0f;
@@ -46,23 +47,23 @@ public class ArcherBehaviour : MonoBehaviour, IEnemyBehaviour
     public bool CanShoot() => cooldownTimer <= 0f;
     public void StartShootCooldown() => cooldownTimer = ShootCooldown;
 
-   
-   public void FireArrow()
-{
-    if (Player == null || BowPoint == null) return;
+    public void FireArrow()
+    {
+        if (Player == null || BowPoint == null) return;
 
-    Vector3 targetPoint = Player.position + Vector3.up * 1f;
-    Vector3 aimDir = (targetPoint - BowPoint.position).normalized;
-    Debug.Log($"[Archer:{gameObject.name}] BowPoint pos: {BowPoint.position}, AimDir: {aimDir}");
+        Vector3 targetPoint = Player.position + Vector3.up * 1f;
+        Vector3 aimDir = (targetPoint - BowPoint.position).normalized;
+        Debug.Log($"[Archer:{gameObject.name}] BowPoint pos: {BowPoint.position}, AimDir: {aimDir}");
 
-    Arrow arrow = ArrowPool.Instance.GetArrow();
-    arrow.transform.position = BowPoint.position;
-    arrow.transform.rotation = Quaternion.LookRotation(aimDir);
+        Arrow arrow = ArrowPool.Instance.GetArrow();
+        arrow.transform.position = BowPoint.position;
+        arrow.transform.rotation = Quaternion.LookRotation(aimDir);
 
-    Debug.Log($"[Archer:{gameObject.name}] Fired arrow at Player.");
-}
+        AudioManager.Instance?.PlayCombatSound(shootSound); // NEW
 
-  
+        Debug.Log($"[Archer:{gameObject.name}] Fired arrow at Player.");
+    }
+
     public void ForceStop()
     {
         if (!enabled) return;
@@ -72,7 +73,6 @@ public class ArcherBehaviour : MonoBehaviour, IEnemyBehaviour
         enabled = false;
     }
 
-    // --- IEnemyBehaviour ---
     public void UpdateBehaviour(Transform self, Transform target)
     {
         if (target != null) Player = target;

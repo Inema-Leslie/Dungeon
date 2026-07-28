@@ -957,6 +957,7 @@ MonoBehaviour:
   openLockSprite: {fileID: 21300000, guid: 9d466d7007713354f9bf420fa8bb34b4, type: 3}
   closedLockSprite: {fileID: 21300000, guid: 6d7cf84bff75f1f47a4d70d65331bf8f, type: 3}
   gameSceneName: SampleScene
+  introSound: {fileID: 8300000, guid: c662d5b047193d049b327b5e236a470a, type: 3}
 --- !u!4 &839363355
 Transform:
   m_ObjectHideFlags: 0

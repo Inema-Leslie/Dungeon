@@ -578,6 +578,7 @@ MonoBehaviour:
   attackCooldown: 0.8
   attackOrigin: {fileID: 1166627271}
   animator: {fileID: 65794494}
+  hitSound: {fileID: 0}
 --- !u!114 &65794497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1682,8 +1683,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4279323131
+  m_fontColor: {r: 0.98490566, g: 0.2863773, b: 0.065040804, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1700,14 +1701,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1811,6 +1812,7 @@ MonoBehaviour:
   - {fileID: 155457903}
   - {fileID: 576959833}
   objectiveMessageManager: {fileID: 1514124266}
+  backgroundMusic: {fileID: 8300000, guid: f64f35109d8175f478a99a0cdb8c14d0, type: 3}
 --- !u!4 &318931270
 Transform:
   m_ObjectHideFlags: 0
@@ -3462,6 +3464,7 @@ MonoBehaviour:
   BowPoint: {fileID: 1110087011}
   DetectionRange: 10
   ShootCooldown: 2
+  shootSound: {fileID: 0}
 --- !u!95 &885701179 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: d663df0e4cba82244b838760c5b8cbe4, type: 3}
@@ -6047,6 +6050,7 @@ MonoBehaviour:
   moveSpeed: 2
   attackDamage: 15
   attackCooldown: 1.5
+  hitSound: {fileID: 0}
   hitsToDefeatPlayer: 5
   hitsToDefeatWarrior: 3
   animator: {fileID: 1758245304}
@@ -6083,6 +6087,7 @@ MonoBehaviour:
   BowPoint: {fileID: 260635575}
   DetectionRange: 10
   ShootCooldown: 2
+  shootSound: {fileID: 0}
 --- !u!95 &1785814996 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: d663df0e4cba82244b838760c5b8cbe4, type: 3}
@@ -6115,6 +6120,7 @@ MonoBehaviour:
   BowPoint: {fileID: 35314413}
   DetectionRange: 10
   ShootCooldown: 2
+  shootSound: {fileID: 0}
 --- !u!95 &1815973738 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: d663df0e4cba82244b838760c5b8cbe4, type: 3}
@@ -6909,6 +6915,7 @@ MonoBehaviour:
   PlayerLayer:
     serializedVersion: 2
     m_Bits: 8
+  hitSound: {fileID: 0}
 --- !u!114 &2014173788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7021,6 +7028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameScripts::GuardianBehaviour
   Player: {fileID: 0}
   Animator: {fileID: 2088550951}
+  EngageRange: 5
   MoveSpeed: 2
   StopDistance: 2
   hitsToDefeat: 10

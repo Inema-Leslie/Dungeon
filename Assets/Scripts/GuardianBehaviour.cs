@@ -1,3 +1,5 @@
+// GuardianBehaviour.cs
+
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -8,6 +10,7 @@ public class GuardianBehaviour : MonoBehaviour, IEnemyBehaviour
     public Animator Animator;
 
     [Header("Movement (Blocking Behavior)")]
+    public float EngageRange = 5f; 
     public float MoveSpeed = 2f;
     public float StopDistance = 2f;
 
@@ -41,7 +44,7 @@ public class GuardianBehaviour : MonoBehaviour, IEnemyBehaviour
 
     private void Start()
     {
-        ChangeState(new GuardianBlockState());
+        ChangeState(new GuardianIdleState()); 
     }
 
     private void Update()
