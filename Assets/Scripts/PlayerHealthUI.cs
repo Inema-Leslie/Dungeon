@@ -33,16 +33,18 @@ public class PlayerHealthUI : MonoBehaviour
     }
 
     private void HandleHealthChanged(float current, float max)
-    {
-        if (healthText != null)
-        {
-            healthText.text = $"{Mathf.CeilToInt(current)} / {Mathf.CeilToInt(max)}";
-        }
+{
+    Debug.Log($"[PlayerHealthUI] HandleHealthChanged called — current: {current}, max: {max}");
 
-        if (healthSlider != null)
-        {
-            healthSlider.maxValue = max;
-            healthSlider.value = current;
-        }
+    if (healthText != null)
+    {
+        healthText.text = $"{Mathf.CeilToInt(current)} / {Mathf.CeilToInt(max)}";
     }
+
+    if (healthSlider != null)
+    {
+        healthSlider.maxValue = max;
+        healthSlider.value = current;
+    }
+}
 }

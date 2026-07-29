@@ -39,25 +39,26 @@ public class PlayerCombat : MonoBehaviour, IAttackable
     }
 
     private void PerformAttack()
+{
+    if (animator != null)
+        animator.SetTrigger(AttackTrigger);
+
+    Vector3 origin = attackOrigin != null ? attackOrigin.position : transform.position + transform.forward;
+
+    Collider[] hits = Physics.OverlapSphere(origin, attackRange);
+    foreach (var hit in hits)
     {
-        if (animator != null)
-            animator.SetTrigger(AttackTrigger);
+        if (hit.gameObject == gameObject) continue;
 
-        Vector3 origin = attackOrigin != null ? attackOrigin.position : transform.position + transform.forward;
-
-        Collider[] hits = Physics.OverlapSphere(origin, attackRange);
-        foreach (var hit in hits)
+        IDamageable damageable = hit.GetComponentInParent<IDamageable>(); 
+        if (damageable != null)
         {
-            if (hit.gameObject == gameObject) continue; 
-
-            IDamageable damageable = hit.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                Attack(damageable);
-                AudioManager.Instance?.PlayCombatSound(hitSound); // NEW
-            }
+            Debug.Log($"[Player] Hit {hit.gameObject.name} for {attackDamage} damage.");
+            Attack(damageable);
+            AudioManager.Instance?.PlayCombatSound(hitSound);
         }
     }
+}
 
     public void Attack(IDamageable target)
     {

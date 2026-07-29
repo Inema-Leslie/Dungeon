@@ -32,6 +32,7 @@ public class PlayerAbilityController : MonoBehaviour
 
         if (inputActions.Player.Heal.WasPressedThisFrame())
         {
+            Debug.Log("[PlayerAbilityController] Heal key pressed.");
             healAbility.Activate(gameObject);
         }
     }

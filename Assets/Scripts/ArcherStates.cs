@@ -65,6 +65,19 @@ public class ArcherShootState : IArcherState
             archer.StartShootCooldown();
         }
     }
+    private bool HasLineOfSight(ArcherBehaviour archer)
+    {
+        Vector3 origin = archer.BowPoint != null ? archer.BowPoint.position : archer.transform.position;
+        Vector3 targetPoint = archer.Player.position + Vector3.up * 1f;
+        Vector3 direction = (targetPoint - origin).normalized;
+        float distance = Vector3.Distance(origin, targetPoint);
 
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+        {
+            return hit.transform == archer.Player;
+        }
+
+        return true;
+    }
     public void Exit(ArcherBehaviour archer) { }
 }

@@ -32,15 +32,16 @@ public class GuardianBehaviour : MonoBehaviour, IEnemyBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        health.OnDamaged += HandleDamaged;
-    }
+   private void OnEnable()
+{
+    Debug.Log($"[Guardian] OnEnable — subscribing to health.OnDamaged. Health InstanceID: {health.GetInstanceID()}, on GameObject: {health.gameObject.name}");
+    health.OnDamaged += HandleDamaged;
+}
 
-    private void OnDisable()
-    {
-        health.OnDamaged -= HandleDamaged;
-    }
+private void OnDisable()
+{
+    health.OnDamaged -= HandleDamaged;
+}
 
     private void Start()
     {

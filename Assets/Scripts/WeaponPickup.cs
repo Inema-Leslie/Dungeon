@@ -1,3 +1,5 @@
+// WeaponPickup.cs — full corrected version
+
 using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour, ICollectable
@@ -17,12 +19,13 @@ public class WeaponPickup : MonoBehaviour, ICollectable
 
     private void Start()
     {
-       
         if (PlayerInventory.Instance != null && PlayerInventory.Instance.HasItem(ItemId))
         {
             if (weaponVisual != null) weaponVisual.SetActive(false);
             if (playerHandWeapon != null) playerHandWeapon.SetActive(true);
             gameObject.SetActive(false);
+
+            GameEvents.RaiseItemCollected(ItemId); 
         }
     }
 
