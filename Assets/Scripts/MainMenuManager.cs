@@ -10,6 +10,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button levelSelectionButton;
     [SerializeField] private Button settingsButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] private TMPro.TMP_InputField nameInputField; 
+    
 
     [Header("Panels")]
     [SerializeField] private GameObject settingsPanel;
@@ -56,7 +58,27 @@ public class MainMenuManager : MonoBehaviour
     {
         settingsPanel?.SetActive(true);
     }
+    public void OnNameSubmitted()
+{
+    Debug.Log("[MainMenuManager] OnNameSubmitted called.");
 
+    if (nameInputField == null)
+    {
+        Debug.LogError("[MainMenuManager] nameInputField is not assigned!");
+        return;
+    }
+
+    Debug.Log($"[MainMenuManager] Input text: '{nameInputField.text}'");
+
+    if (!string.IsNullOrWhiteSpace(nameInputField.text))
+    {
+        PlayerProfileManager.Instance?.SetPlayerName(nameInputField.text);
+    }
+    else
+    {
+        Debug.LogWarning("[MainMenuManager] Input field is empty, not saving.");
+    }
+}
     private void OnExit()
     {
         Debug.Log("[MainMenuManager] Exiting game.");
