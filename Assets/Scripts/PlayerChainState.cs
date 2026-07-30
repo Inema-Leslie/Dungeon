@@ -13,7 +13,7 @@ public class PlayerChainState : MonoBehaviour
     private int attemptCount = 0;
     private bool isChained = true;
     private bool inputHeldLastFrame = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
      if (playerMovement != null)
@@ -26,7 +26,7 @@ public class PlayerChainState : MonoBehaviour
      if (!isChained) return;
      Vector2 moveInput = playerMovement != null ? playerMovement.GetCurrentMoveInput() : Vector2.zero;
      bool inputPressed = moveInput.magnitude > 0.1f;
-     // count a press as an attempt to free
+     
      if (inputPressed && !inputHeldLastFrame)
         {
             attemptCount++;

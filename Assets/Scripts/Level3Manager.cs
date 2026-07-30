@@ -1,13 +1,13 @@
-
 using UnityEngine;
 
 public class Level3Manager : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject childGameObject;
+    [SerializeField] private ObjectiveMessageManager objectiveMessageManager;
 
     [Header("Level Progression")]
-    [SerializeField] private int levelIndex = 2; 
+    [SerializeField] private int levelIndex = 2;
 
     private bool outcomeResolved = false;
 
@@ -44,6 +44,8 @@ public class Level3Manager : MonoBehaviour
             childGameObject.SetActive(true);
 
         GameManager.Instance?.CompleteLevel(levelIndex);
+        GameManager.Instance?.SetCurrentLevel(levelIndex + 1);
+        objectiveMessageManager?.ShowObjective(levelIndex + 1);
     }
 
     private void HandleChildDied()
@@ -52,7 +54,5 @@ public class Level3Manager : MonoBehaviour
 
         if (childGameObject != null)
             childGameObject.SetActive(false);
-
-        
     }
 }

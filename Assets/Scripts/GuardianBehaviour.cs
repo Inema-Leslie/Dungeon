@@ -1,5 +1,3 @@
-// GuardianBehaviour.cs
-
 using UnityEngine;
 
 [RequireComponent(typeof(Health))]
@@ -80,6 +78,8 @@ private void OnDisable()
         Debug.Log("[Guardian] Defeated — path is clear.");
 
         if (TryGetComponent<Collider>(out var col)) col.enabled = false;
+        GameEvents.RaiseGuardianDefeated();
+    PlayerProfileManager.Instance?.MarkGameBeaten();
     }
 
     // --- IEnemyBehaviour ---

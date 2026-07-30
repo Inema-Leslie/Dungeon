@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour, IMovable
             return;
         }
 
-        // Dashing overrides normal movement entirely for its short duration.
+    
         if (isDashing)
         {
             dashTimer -= Time.deltaTime;
@@ -132,10 +132,10 @@ public class PlayerMovement : MonoBehaviour, IMovable
 
     public void SetMovementEnabled(bool enabled) => movementEnabled = enabled;
 
-    /// <summary>Exposes current move input so PlayerChainState can count attempts.</summary>
+    
     public Vector2 GetCurrentMoveInput() => inputActions.Player.Move.ReadValue<Vector2>();
 
-    /// <summary>Called by DashAbility.Activate() to trigger a short burst of forward movement.</summary>
+    
     public void StartDash(float distance, float duration)
     {
         if (isDashing) return;

@@ -48,7 +48,7 @@ public class PlayerProfileManager : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string json = request.downloadHandler.text;
-                // JSONBin wraps the actual data inside a "record" field.
+                
                 JsonBinWrapper wrapper = JsonUtility.FromJson<JsonBinWrapper>(json);
                 CurrentProfile = wrapper.record;
                 Debug.Log($"[PlayerProfileManager] Fetched profile: {CurrentProfile.playerName}, hasBeatenGame: {CurrentProfile.hasBeatenGame}");

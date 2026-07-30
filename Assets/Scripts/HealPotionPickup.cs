@@ -1,4 +1,3 @@
-// HealPotionPickup.cs
 using UnityEngine;
 
 public class HealPotionPickup : MonoBehaviour, ICollectable

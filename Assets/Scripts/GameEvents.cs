@@ -4,12 +4,11 @@ using UnityEngine;
 public static class GameEvents
 {
     // ---Player events ---
-    public static event Action<float, float> OnHealthChanged; // (current,max)
+    public static event Action<float, float> OnHealthChanged; 
     public static event Action OnPlayerDied;
     
     // ---Progression events ---
-    public static event Action<string> OnItemCollected; //shield or weapon
-    public static event Action OnShieldCollected;
+    public static event Action<string> OnItemCollected;
     public static event Action OnChainsBroken;
     public static event Action OnDoorOpened;
     public static event Action<string> OnEnemyDefeated;
@@ -18,21 +17,23 @@ public static class GameEvents
     public static event System.Action OnChildSaved;
     public static event System.Action OnChildDied;
 
+    // --- Boss / outcome events ---
+    public static event Action OnGuardianDefeated;
+
     // --- Game state ---
-    public static event Action <string> OnGameStateChanged; //paused or gameover
+    public static event Action <string> OnGameStateChanged;
 
     // ---Raise methods ---
     public static void RaiseHealthChanged(float current, float max) => OnHealthChanged?.Invoke(current, max);
     public static void RaisePlayerDied() => OnPlayerDied?.Invoke();
-    public static void RaiseShieldCollected() => OnChainsBroken?.Invoke();
     public static void RaiseChainsBroken() => OnChainsBroken?.Invoke();
     public static void RaiseDoorOpened() => OnDoorOpened?.Invoke();
     public static void RaiseEnemyDefeated(string enemyType) => OnEnemyDefeated?.Invoke(enemyType);
     public static void RaiseLevelCompleted(int levelIndex) => OnLevelCompleted?.Invoke(levelIndex);
     public static void RaiseLevelUnlocked(int levelIndex) => OnLevelUnlocked?.Invoke(levelIndex);
-    public static void RaiseGameStateChanged (string state) => OnGameStateChanged?.Invoke(state);
+    public static void RaiseGameStateChanged(string state) => OnGameStateChanged?.Invoke(state);
     public static void RaiseItemCollected(string itemId) => OnItemCollected?.Invoke(itemId);
     public static void RaiseChildSaved() => OnChildSaved?.Invoke();
     public static void RaiseChildDied() => OnChildDied?.Invoke();
+    public static void RaiseGuardianDefeated() => OnGuardianDefeated?.Invoke();
 }
-

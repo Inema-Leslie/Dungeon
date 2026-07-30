@@ -10,7 +10,7 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float attackDamage = 15f;
     [SerializeField] private float attackCooldown = 2.5f;
-    [SerializeField] private AudioClip hitSound; 
+    [SerializeField] private AudioClip hitSound;
 
     [Header("Fight Outcome (hit-count based)")]
     [SerializeField] private int hitsToDefeatPlayer = 5;
@@ -19,6 +19,10 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
     [Header("References")]
     [SerializeField] private Animator animator;
     [SerializeField] private Transform player;
+
+    [Header("Level Progression")]
+    [SerializeField] private ObjectiveMessageManager objectiveMessageManager;
+    [SerializeField] private int levelIndex = 1; 
 
     private static readonly int SpeedParam = Animator.StringToHash("Speed");
     private static readonly int AttackTrigger = Animator.StringToHash("Attack");
@@ -31,6 +35,7 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
 
     private int warriorHitsOnPlayer = 0;
     private int playerHitsOnWarrior = 0;
+    private bool levelCompleted = false;
 
     public WarriorIdleState IdleState { get; private set; }
     public WarriorChaseState ChaseState { get; private set; }
@@ -44,7 +49,7 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
     public Animator Animator => animator;
     public Transform Player => player;
     public Health Health => health;
-    public AudioClip HitSound => hitSound; 
+    public AudioClip HitSound => hitSound;
 
     private void Awake()
     {
@@ -135,21 +140,31 @@ public class WarriorBehaviour : MonoBehaviour, IEnemyBehaviour, IAttackable
             Debug.Log("[Warrior] Reached hit threshold — Warrior defeated.");
             health.Die();
             ChangeState(DeadState);
+            HandleLevelComplete();
         }
     }
 
-    
+    private void HandleLevelComplete()
+    {
+        if (levelCompleted) return;
+        levelCompleted = true;
+
+        Debug.Log("[Warrior] Level 2 complete — unlocking Level 3.");
+        GameManager.Instance?.CompleteLevel(levelIndex);
+        GameManager.Instance?.SetCurrentLevel(levelIndex + 1);
+        objectiveMessageManager?.ShowObjective(levelIndex + 1);
+    }
 
     public void ForceStop()
     {
-    if (!enabled) return;
+        if (!enabled) return;
 
-    Debug.Log("[Warrior] ForceStop triggered — Player left Warrior's territory.");
-    ChangeState(IdleState);
-    SetAnimSpeed(0f);
-    enabled = false;
+        Debug.Log("[Warrior] ForceStop triggered — Player left Warrior's territory.");
+        ChangeState(IdleState);
+        SetAnimSpeed(0f);
+        enabled = false;
 
-    if (TryGetComponent<Collider>(out var col)) col.enabled = false; // NEW — stop physically blocking the path
+        if (TryGetComponent<Collider>(out var col)) col.enabled = false; 
     }
 
     // --- IEnemyBehaviour ---

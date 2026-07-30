@@ -5,6 +5,10 @@ public class Level4CheckpointTrigger : MonoBehaviour
     [SerializeField] private ArcherBehaviour[] archers;
     [SerializeField] private string playerTag = "Player";
 
+    [Header("Level Progression")]
+    [SerializeField] private ObjectiveMessageManager objectiveMessageManager;
+    [SerializeField] private int levelIndex = 3; 
+
     private bool triggered = false;
 
     private void OnTriggerEnter(Collider other)
@@ -20,5 +24,15 @@ public class Level4CheckpointTrigger : MonoBehaviour
             if (archer != null)
                 archer.ForceStop();
         }
+
+        HandleLevelComplete();
+    }
+
+    private void HandleLevelComplete()
+    {
+        Debug.Log("[Level4CheckpointTrigger] Level 4 complete — unlocking Level 5.");
+        GameManager.Instance?.CompleteLevel(levelIndex);
+        GameManager.Instance?.SetCurrentLevel(levelIndex + 1);
+        objectiveMessageManager?.ShowObjective(levelIndex + 1);
     }
 }

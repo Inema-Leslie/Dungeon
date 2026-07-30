@@ -10,7 +10,7 @@ public class ArcherBehaviour : MonoBehaviour, IEnemyBehaviour
     [Header("Combat Settings")]
     public float DetectionRange = 10f;
     public float ShootCooldown = 2f;
-    [SerializeField] private AudioClip shootSound; // NEW
+    [SerializeField] private AudioClip shootSound; 
 
     private IArcherState currentState;
     private float cooldownTimer = 0f;
@@ -59,7 +59,7 @@ public class ArcherBehaviour : MonoBehaviour, IEnemyBehaviour
         arrow.transform.position = BowPoint.position;
         arrow.transform.rotation = Quaternion.LookRotation(aimDir);
 
-        AudioManager.Instance?.PlayCombatSound(shootSound); // NEW
+        AudioManager.Instance?.PlayCombatSound(shootSound); 
 
         Debug.Log($"[Archer:{gameObject.name}] Fired arrow at Player.");
     }

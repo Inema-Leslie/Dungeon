@@ -16,7 +16,7 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
     public float AttackDamage = 15f;
     public float AttackRadius = 1f;
     public LayerMask PlayerLayer;
-    [SerializeField] private AudioClip hitSound; // NEW
+    [SerializeField] private AudioClip hitSound; 
 
     private IMonsterState currentState;
     private Health health;
@@ -70,7 +70,7 @@ public class MonsterBehaviour : MonoBehaviour, IEnemyBehaviour
             if (hit.TryGetComponent<IDamageable>(out var damageable))
             {
                 damageable.TakeDamage(AttackDamage);
-                AudioManager.Instance?.PlayCombatSound(hitSound); // NEW
+                AudioManager.Instance?.PlayCombatSound(hitSound); 
             }
         }
     }

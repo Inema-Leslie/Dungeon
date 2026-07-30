@@ -6,7 +6,7 @@ public class InventoryPanelUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI inventoryText;
 
-    // Maps internal item IDs to friendly display names.
+    
     private static readonly Dictionary<string, string> DisplayNames = new Dictionary<string, string>
     {
         { "Weapon", "Axe" },
@@ -15,7 +15,11 @@ public class InventoryPanelUI : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerInventory.Instance == null || inventoryText == null) return;
+        if (PlayerInventory.Instance == null || inventoryText == null)
+    {
+        Debug.Log($"Inventory blocked — Instance null: {PlayerInventory.Instance == null}, Text null: {inventoryText == null}");
+        return;
+    }
 
         var sorted = InventorySorter.SortAlphabetically(PlayerInventory.Instance.CollectedItems);
 

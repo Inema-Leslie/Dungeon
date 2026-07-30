@@ -33,7 +33,7 @@ public class PauseMenuManager : MonoBehaviour
 
     public void OnMainMenuClicked()
     {
-        Time.timeScale = 1f; // reset before leaving, so MainMenu doesn't inherit a frozen timescale
+        Time.timeScale = 1f; 
         SceneManager.LoadScene(mainMenuSceneName);
     }
 }

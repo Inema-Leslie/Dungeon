@@ -37,7 +37,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnStartGame()
     {
-        // Fresh save — wipes progress, starts at Level 1
+        
         SaveManager.Instance?.DeleteSave();
         GameManager.Instance?.SetCurrentLevel(0);
         SceneManager.LoadScene(GameSceneName);

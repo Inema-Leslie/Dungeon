@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Level Progression")]
     [SerializeField] private int totalLevels = 5;
-    private int[] levelStatus; // 0 = locked, 1 = available, 2 = completed
+    private int[] levelStatus; 
 
     public int CurrentLevelIndex { get; private set; } = 0;
 
@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            levelStatus[0] = 1; // Level 1 always available
+            levelStatus[0] = 1; 
             for (int i = 1; i < totalLevels; i++) levelStatus[i] = 0;
         }
     }
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         if (levelIndex < 0 || levelIndex >= totalLevels) return;
 
-        levelStatus[levelIndex] = 2; // completed
+        levelStatus[levelIndex] = 2; 
         GameEvents.RaiseLevelCompleted(levelIndex);
 
         int next = levelIndex + 1;

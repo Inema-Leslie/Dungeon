@@ -5,6 +5,8 @@ public class DoorController : MonoBehaviour
 {
     [SerializeField] private GameObject doorMesh;
     [SerializeField] private int hitsRequired = 2;
+    [SerializeField] private ObjectiveMessageManager objectiveMessageManager;
+    [SerializeField] private int nextLevelIndex = 1;
 
     private InputSystem_Actions inputActions;
     private int hitCount = 0;
@@ -68,11 +70,13 @@ public class DoorController : MonoBehaviour
     }
 
     private void OpenDoor()
-{
-    if (doorMesh != null)
-        doorMesh.SetActive(false);
+    {
+        if (doorMesh != null)
+            doorMesh.SetActive(false);
 
-    GameEvents.RaiseDoorOpened();
-    GameManager.Instance?.CompleteLevel(0); 
-}
+        GameEvents.RaiseDoorOpened();
+        GameManager.Instance?.CompleteLevel(0);
+        GameManager.Instance?.SetCurrentLevel(nextLevelIndex);
+        objectiveMessageManager?.ShowObjective(nextLevelIndex);
+    }
 }

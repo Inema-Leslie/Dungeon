@@ -1,5 +1,3 @@
-
-
 public interface IMonsterState
 {
     void Enter(MonsterBehaviour monster);
@@ -67,7 +65,7 @@ public class MonsterAttackState : IMonsterState
     }
 }
 
-// --- Dead: fight is over, monster defeated ---
+
 
 public class MonsterDeadState : IMonsterState
 {

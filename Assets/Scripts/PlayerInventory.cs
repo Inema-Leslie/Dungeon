@@ -35,7 +35,7 @@ public class PlayerInventory : MonoBehaviour
 
     public bool HasItem(string itemId) => CollectedItems.Contains(itemId);
 
-    // --- Charge-based items (e.g. Heal Potions) ---
+    
 
     public bool HasCharge(string itemId) => ItemCharges.ContainsKey(itemId) && ItemCharges[itemId] > 0;
 

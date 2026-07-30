@@ -58,6 +58,6 @@ public class ObjectiveMessageManager : MonoBehaviour
         yield return null;
     }
     canvasGroup.alpha = 0f;
-    Debug.Log("[ObjectiveMessageManager] Fade complete, alpha back to 0."); // NEW
+    Debug.Log("[ObjectiveMessageManager] Fade complete, alpha back to 0."); 
 }
 }
