@@ -54,7 +54,6 @@ public class SaveManagerTests
         {
             levelStatus = new int[] { 2, 1, 0, 0, 0 },
             playerHealth = 42f,
-            hasShield = true,
             currentLevel = 1
         };
 
@@ -63,7 +62,6 @@ public class SaveManagerTests
 
         Assert.IsNotNull(loaded, "LoadGame should return data after a successful save.");
         Assert.AreEqual(original.playerHealth, loaded.playerHealth, "Player health should persist correctly.");
-        Assert.AreEqual(original.hasShield, loaded.hasShield, "hasShield should persist correctly.");
         Assert.AreEqual(original.currentLevel, loaded.currentLevel, "currentLevel should persist correctly.");
         Assert.AreEqual(original.levelStatus[0], loaded.levelStatus[0], "levelStatus array should persist correctly.");
 

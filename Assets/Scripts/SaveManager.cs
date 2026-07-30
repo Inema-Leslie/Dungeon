@@ -1,4 +1,5 @@
 using System.IO;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -6,6 +7,12 @@ public class SaveManager : MonoBehaviour
     public static SaveManager Instance { get; private set; }
 
     private string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+ 
+    [DllImport("__Internal")]
+    private static extern void SyncFiles();
+#endif
 
     private void Awake()
     {
@@ -23,6 +30,10 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(SavePath, json);
         Debug.Log($"Game saved to {SavePath}");
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        SyncFiles(); 
+#endif
     }
 
     public SaveData LoadGame()
@@ -47,11 +58,10 @@ public class SaveManager : MonoBehaviour
         SaveGame(data);
     }
 
-    public void SavePlayerState(float health, bool hasShield, System.Collections.Generic.List<string> inventory)
+    public void SavePlayerState(float health, System.Collections.Generic.List<string> inventory)
     {
         SaveData data = LoadGame() ?? new SaveData();
         data.playerHealth = health;
-        data.hasShield = hasShield;
         data.inventory = inventory;
         SaveGame(data);
     }
@@ -61,13 +71,16 @@ public class SaveManager : MonoBehaviour
     public void DeleteSave()
     {
         if (File.Exists(SavePath)) File.Delete(SavePath);
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+        SyncFiles();
+#endif
     }
-    
 
     public void SaveInventory(System.Collections.Generic.List<string> inventory)
     {
-    SaveData data = LoadGame() ?? new SaveData();
-    data.inventory = inventory;
-    SaveGame(data);
+        SaveData data = LoadGame() ?? new SaveData();
+        data.inventory = inventory;
+        SaveGame(data);
     }
 }

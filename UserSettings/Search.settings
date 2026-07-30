@@ -9,7 +9,7 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
-	"last_search.66F56946" = "p: dir=Scripts"
+	"last_search.66F56946" = "p: dir=Scripts findstr /s /i \"hasShield\" *.cs"
 	"OpenInspectorPreview.66F56946" = "0"
 	"currentGroup.66F56946" = "asset"
 }
@@ -68,6 +68,9 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"p: dir=Scripts findstr /s /i \"hasShield\" *.cs"
+	"p: dir=Scripts has "
+	"p: dir=Scripts findstr "
 	"p: dir=Scripts ga"
 	"p: dir=Scripts game"
 	"p: dir=\"Scripts\" "
