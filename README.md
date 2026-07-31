@@ -75,9 +75,17 @@ WebGL — save system adapted via conditional compilation (see above) to persist
 Mobile (Android) — on-screen touch controls (movement stick + Attack/Interact/Dash/Heal buttons) built using Unity's Input System On-Screen Controls, mapped onto existing Gamepad bindings in InputSystem_Actions so no changes were needed to PlayerMovement, PlayerCombat, or ability scripts. MobileUIController.cs shows/hides these controls based on platform via #if UNITY_ANDROID || UNITY_IOS.
 Input differences, UI scaling (Canvas Scaler set to Scale With Screen Size), and platform-specific save behavior were all considered in the above adaptations.
 Setup & Build Instructions
+
 Clone the repository and open in Unity 6000.4.5f1 (or later).
 Ensure the Android Build Support module (with SDK & NDK Tools) is installed via Unity Hub if building for Android.
 Always launch from the MainMenu scene, not SampleScene directly — persistent singletons (GameManager, SaveManager, PlayerInventory, AudioManager, PlayerProfileManager) are only instantiated from MainMenu and testing from SampleScene directly will cause null-reference errors.
 Windows Build: File → Build Profiles → Windows → Build.
 WebGL Build: File → Build Profiles → Web → Build. Test locally via a local server (python -m http.server 8000), not by opening index.html directly, due to browser CORS restrictions.
 Android Build: File → Build Profiles → Android → Build. Requires a compatible NDK version as specified by your Unity Editor version.
+
+Sources of all my assets
+https://freesound.org/people/lalazzylee1/sounds/362240/  
+https://freesound.org/people/KinnieKindaceline/sounds/678714/ 
+https://freesound.org/people/Victor_Natas/sounds/721292/ 
+All my charachers and animations come from https://www.mixamo.com/#/
+All the props and gameobjects come from https://assetstore.unity.com/
